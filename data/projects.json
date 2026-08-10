@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-08-10T20:17:00+08:00",
+  "last_success_at": "2026-08-10T20:17:00+08:00",
+  "is_sample": true,
+  "projects": [
+    {
+      "id": "sample-jq06-9001",
+      "title": "示例数据：某部医疗设备询价采购公告",
+      "project_number": "2026-JQ06-W9001",
+      "matched_prefix": "JQ06-W",
+      "purchase_method": "询价",
+      "region": "北京市",
+      "published_date": "2026-08-10",
+      "notice_kind": "new",
+      "matched_keyword": "询价",
+      "source_url": "https://www.plap.mil.cn/freecms-glht/site/juncai/cggg/index.html",
+      "first_seen_at": "2026-08-10T20:17:00+08:00",
+      "last_seen_at": "2026-08-10T20:17:00+08:00"
+    },
+    {
+      "id": "sample-jq01-9002",
+      "title": "示例数据：某部物资公开招标更正公告",
+      "project_number": "2026-JQ01-W9002",
+      "matched_prefix": "JQ01-W",
+      "purchase_method": "公开招标",
+      "region": "河北省",
+      "published_date": "2026-08-09",
+      "notice_kind": "change",
+      "matched_keyword": "招标",
+      "source_url": "https://www.plap.mil.cn/freecms-glht/site/juncai/cggg/index.html",
+      "first_seen_at": "2026-08-09T11:17:00+08:00",
+      "last_seen_at": "2026-08-10T20:17:00+08:00"
+    },
+    {
+      "id": "sample-jq06-9003",
+      "title": "示例数据：某部耗材竞争性谈判公告",
+      "project_number": "2026-JQ06-W9003",
+      "matched_prefix": "JQ06-W",
+      "purchase_method": "竞争性谈判",
+      "region": "天津市",
+      "published_date": "2026-08-07",
+      "notice_kind": "baseline",
+      "matched_keyword": "谈判",
+      "source_url": "https://www.plap.mil.cn/freecms-glht/site/juncai/cggg/index.html",
+      "first_seen_at": "2026-08-10T20:17:00+08:00",
+      "last_seen_at": "2026-08-10T20:17:00+08:00"
+    },
+    {
+      "id": "sample-jq01-9004",
+      "title": "示例数据：某部医疗器械询价延期公告",
+      "project_number": "2026-JQ01-W9004",
+      "matched_prefix": "JQ01-W",
+      "purchase_method": "询价",
+      "region": "山东省",
+      "published_date": "2026-08-03",
+      "notice_kind": "change",
+      "matched_keyword": "询价",
+      "source_url": "https://www.plap.mil.cn/freecms-glht/site/juncai/cggg/index.html",
+      "first_seen_at": "2026-08-03T08:17:00+08:00",
+      "last_seen_at": "2026-08-10T20:17:00+08:00"
+    }
+  ]
+}

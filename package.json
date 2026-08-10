@@ -1,0 +1,13 @@
+{
+  "name": "procurement-radar-pages",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "check:data": "node --input-type=module -e \"import { readFile } from 'node:fs/promises'; import { validatePayload } from './lib.js'; validatePayload(JSON.parse(await readFile('data/projects.json', 'utf8')));\""
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

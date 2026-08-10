@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <meta name="theme-color" content="#f6f7f2">
+    <meta name="referrer" content="no-referrer">
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests"
+    >
+    <meta
+      name="description"
+      content="用于查看军采公开公告匹配结果的只读测试看板。"
+    >
+    <title>项目雷达｜军采公告只读看板</title>
+    <link rel="stylesheet" href="./styles.css">
+    <script type="module" src="./app.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+
+    <header class="site-header">
+      <div class="shell header-inner">
+        <div class="brand-block">
+          <span class="radar-mark" aria-hidden="true"><span></span></span>
+          <div>
+            <div class="brand-line">
+              <span class="eyebrow">PROCUREMENT RADAR</span>
+              <span class="test-badge">只读测试版</span>
+            </div>
+            <h1>项目雷达</h1>
+            <p>公开采购公告的筛选与追踪看板</p>
+          </div>
+        </div>
+
+        <div class="health-panel" aria-live="polite">
+          <span class="health-dot is-loading" id="health-dot" aria-hidden="true"></span>
+          <div>
+            <span class="health-label" id="health-label">正在读取数据</span>
+            <time class="health-time" id="health-time">最后检查：--</time>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="shell" id="main-content">
+      <section class="notice-strip" aria-label="使用说明">
+        <span class="notice-icon" aria-hidden="true">i</span>
+        <p>
+          本页面是内部测试辅助工具，仅展示无需登录即可取得的公开字段；项目信息以
+          <a href="https://www.plap.mil.cn/freecms-glht/site/juncai/cggg/index.html" target="_blank" rel="noopener noreferrer">军队采购网原文</a>
+          为准。
+        </p>
+      </section>
+
+      <div class="system-message" id="system-message" role="status" aria-live="polite" hidden></div>
+
+      <section class="summary-grid" aria-label="项目概览">
+        <article class="summary-card summary-primary">
+          <p>当前筛选</p>
+          <strong id="total-count">--</strong>
+          <span>个项目</span>
+        </article>
+        <article class="summary-card">
+          <p><span class="mini-dot dot-new" aria-hidden="true"></span>新项目</p>
+          <strong id="new-count">--</strong>
+          <span>系统启用后发现</span>
+        </article>
+        <article class="summary-card">
+          <p><span class="mini-dot dot-change" aria-hidden="true"></span>项目变更</p>
+          <strong id="change-count">--</strong>
+          <span>更正、变更、澄清或延期</span>
+        </article>
+        <article class="summary-card summary-check">
+          <p>数据时间</p>
+          <strong id="age-value">--</strong>
+          <span id="age-detail">等待首次加载</span>
+        </article>
+      </section>
+
+      <section class="filter-panel" aria-labelledby="filter-title">
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">FILTERS</span>
+            <h2 id="filter-title">筛选项目</h2>
+          </div>
+          <button class="reset-button" id="reset-button" type="button">重置筛选</button>
+        </div>
+
+        <div class="filter-grid">
+          <label class="field field-search">
+            <span>搜索</span>
+            <span class="input-wrap">
+              <span class="search-icon" aria-hidden="true"></span>
+              <input id="search-input" type="search" autocomplete="off" placeholder="标题或项目编号">
+            </span>
+          </label>
+
+          <label class="field">
+            <span>项目编号</span>
+            <select id="prefix-filter">
+              <option value="all">全部编号</option>
+              <option value="JQ06-W">JQ06-W</option>
+              <option value="JQ01-W">JQ01-W</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>标题类型</span>
+            <select id="method-filter">
+              <option value="all">全部类型</option>
+              <option value="谈判">谈判</option>
+              <option value="招标">招标</option>
+              <option value="询价">询价</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>公告状态</span>
+            <select id="status-filter">
+              <option value="all">全部状态</option>
+              <option value="new">新项目</option>
+              <option value="change">项目变更</option>
+              <option value="baseline">历史导入</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>开始日期</span>
+            <input id="date-from" type="date">
+          </label>
+
+          <label class="field">
+            <span>结束日期</span>
+            <input id="date-to" type="date">
+          </label>
+        </div>
+        <p class="filter-error" id="filter-error" role="alert" hidden></p>
+      </section>
+
+      <section class="results-section" aria-labelledby="results-title">
+        <div class="results-heading">
+          <div>
+            <span class="section-kicker">LATEST 30 DAYS</span>
+            <h2 id="results-title">近30天匹配项目</h2>
+          </div>
+          <p id="results-caption">正在读取公告数据…</p>
+        </div>
+
+        <div class="loading-state" id="loading-state" aria-label="正在加载">
+          <div class="skeleton-card"></div>
+          <div class="skeleton-card"></div>
+          <div class="skeleton-card"></div>
+        </div>
+
+        <div class="empty-state" id="empty-state" hidden>
+          <span class="empty-radar" aria-hidden="true"></span>
+          <h3 id="empty-title">暂无匹配项目</h3>
+          <p id="empty-description">近30天内暂时没有符合条件的公开公告。</p>
+        </div>
+
+        <div class="project-list" id="project-list"></div>
+      </section>
+
+      <noscript>
+        <section class="noscript-message">
+          此看板需要启用 JavaScript 才能读取并筛选项目数据。
+        </section>
+      </noscript>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shell footer-inner">
+        <p>项目雷达 · 公开信息只读测试</p>
+        <p>不提供报名、投标、附件下载或登录功能</p>
+      </div>
+    </footer>
+
+    <template id="project-card-template">
+      <article class="project-card">
+        <div class="card-accent" aria-hidden="true"></div>
+        <div class="card-content">
+          <div class="card-topline">
+            <div class="tag-list">
+              <span class="status-tag"></span>
+              <span class="method-tag"></span>
+            </div>
+            <time class="publish-date"></time>
+          </div>
+          <h3 class="project-title"></h3>
+          <dl class="project-meta">
+            <div>
+              <dt>项目编号</dt>
+              <dd class="project-number"></dd>
+            </div>
+            <div>
+              <dt>编号范围</dt>
+              <dd class="matched-prefix"></dd>
+            </div>
+            <div>
+              <dt>采购方式</dt>
+              <dd class="purchase-method"></dd>
+            </div>
+            <div>
+              <dt>项目所在地</dt>
+              <dd class="project-region"></dd>
+            </div>
+          </dl>
+          <div class="card-footer">
+            <p class="match-reason"></p>
+            <a class="source-link" target="_blank" rel="noopener noreferrer">
+              查看官网原文
+              <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </div>
+      </article>
+    </template>
+  </body>
+</html>
